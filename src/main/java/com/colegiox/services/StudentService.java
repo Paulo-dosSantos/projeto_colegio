@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.colegiox.entities.Student;
+import com.colegiox.exceptions.ObjectNotFoundException;
 import com.colegiox.repository.StudentRepository;
 
 @Service
@@ -20,7 +21,7 @@ public class StudentService {
 		return repository.findAll();
 	}
 	public Student findById(Integer id) {
-		return repository.findById(id).get();
+		return repository.findById(id).orElseThrow(()->new ObjectNotFoundException("Objeto não encontrado"));
 	}
 	public void delete(Integer id) {
 		repository.deleteById(id);

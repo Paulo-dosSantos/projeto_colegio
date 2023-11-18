@@ -27,7 +27,7 @@ public class Student implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private   Integer 	ID;
+	private   Integer 	id;
 	
 	@NonNull
 	private String name;
@@ -35,8 +35,7 @@ public class Student implements Serializable{
 	@NonNull
 	private String email;
 	
-	@NonNull
-	private Double notaFinal;
+	
 	
 	@NonNull
 	private Instant birth;
