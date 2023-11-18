@@ -1,13 +1,13 @@
-package com.colegiox.demo;
+package com.colegiox;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class DemoApplication {
+public class ColegioApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DemoApplication.class, args);
+		SpringApplication.run(ColegioApplication.class, args);
 	}
 
 }
