@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.colegiox.entities.enums.NumberClass;
+import com.colegiox.entities.enums.Shifts;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -35,7 +37,12 @@ public class SchoolClass implements Serializable{
 	
 	@NonNull
 	@Enumerated(EnumType.STRING)
+	@Column(unique=true)
 	private NumberClass number;
+	
+	@NonNull
+	@Enumerated(EnumType.STRING)
+	private Shifts shift;
 	
 	@OneToMany(mappedBy="schoolClass")
 	@JsonIgnore

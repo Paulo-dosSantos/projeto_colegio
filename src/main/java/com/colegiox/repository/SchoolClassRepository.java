@@ -7,5 +7,7 @@ import com.colegiox.entities.SchoolClass;
 
 @Repository
 public interface SchoolClassRepository extends JpaRepository<SchoolClass	, Integer> {
-
+	
+	
+	
 }
