@@ -1,8 +1,16 @@
 package com.colegiox.services;
 
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -15,22 +23,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import com.colegiox.entities.SchoolClass;
 import com.colegiox.entities.Student;
 import com.colegiox.entities.enums.NumberClass;
 import com.colegiox.entities.enums.Shifts;
+import com.colegiox.exceptions.ObjectNotFoundException;
 import com.colegiox.repository.StudentRepository;
-import java.util.List;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 
 @TestInstance(Lifecycle.PER_CLASS)
@@ -49,6 +48,8 @@ class StudentServiceTest {
 	private static final String NAME = "John Constantine";
 
 	private static final Integer ID = 1;
+
+	private static final String EXCECAO = "Objeto não encontrado";
 
 	@Mock
 	private StudentRepository repository;
@@ -99,22 +100,70 @@ class StudentServiceTest {
 
 	@Test
 	void testFindById() {
-		fail("Not yet implemented");
+		when(repository.findById(anyInt())).thenReturn(optionalStudent);
+		
+		Student response= service.findById(ID);
+		
+		assertNotNull(response);
+		assertNotNull(response.getSchoolClass());
+		assertEquals(Student.class,response.getClass());
+		assertEquals(SchoolClass.class,response.getSchoolClass().getClass());
+		assertEquals(ID,response.getId());
+		assertEquals(NAME,response.getName());
+		assertEquals(EMAIL,response.getEmail());
+		assertEquals(BIRTH,response.getBirth());
+		assertEquals(CONDITION,response.getCondition());
 	}
 
 	@Test
 	void testDelete() {
-		fail("Not yet implemented");
+		doNothing().when(repository).deleteById(ID);
+		service.delete(ID);
+		verify(repository,times(1)).deleteById(anyInt());
 	}
 
 	@Test
 	void testInsert() {
-		fail("Not yet implemented");
+		when(repository.save(any(Student.class))).thenReturn(student);
+		
+		Student response= service.insert(student);
+		assertNotNull(response);
+		assertNotNull(response.getSchoolClass());
+		assertEquals(Student.class,response.getClass());
+		assertEquals(SchoolClass.class,response.getSchoolClass().getClass());
+		assertEquals(ID,response.getId());
+		assertEquals(NAME,response.getName());
+		assertEquals(EMAIL,response.getEmail());
+		assertEquals(BIRTH,response.getBirth());
+		assertEquals(CONDITION,response.getCondition());
 	}
 
 	@Test
 	void testUpdate() {
-		fail("Not yet implemented");
+		when(repository.findById(anyInt())).thenReturn(optionalStudent);
+		when(repository.save(any(Student.class))).thenReturn(student);
+		Student response= service.update(ID,student);
+		assertNotNull(response);
+		assertNotNull(response.getSchoolClass());
+		assertEquals(Student.class,response.getClass());
+		assertEquals(SchoolClass.class,response.getSchoolClass().getClass());
+		assertEquals(ID,response.getId());
+		assertEquals(NAME,response.getName());
+		assertEquals(EMAIL,response.getEmail());
+		assertEquals(BIRTH,response.getBirth());
+		assertEquals(CONDITION,response.getCondition());
+		
 	}
+	@Test
+	void testFindByIdReturnObjectNotFoundException() {
+		when(repository.findById(anyInt())).thenThrow(new ObjectNotFoundException(EXCECAO));
+		
+		try {
+			service.findById(ID);
+		}
+		catch(Exception ex) {
+			assertEquals(ObjectNotFoundException.class, ex.getClass());
+			assertEquals(EXCECAO,ex.getMessage());
+		}
 
-}
+	}}
