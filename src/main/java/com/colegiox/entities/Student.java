@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -42,5 +43,8 @@ public class Student implements Serializable{
 	
 	@NonNull
 	private Boolean condition;
-
+	
+	@ManyToOne
+	@NonNull
+	private SchoolClass schoolClass;
 }
