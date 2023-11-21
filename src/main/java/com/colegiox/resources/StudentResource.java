@@ -26,7 +26,7 @@ public class StudentResource {
 	private StudentService service;
 	
 	@GetMapping
-	private ResponseEntity<List<Student>>findAll(){
+	public ResponseEntity<List<Student>>findAll(){
 		
 		return ResponseEntity.ok(service.findAll());
 	}
