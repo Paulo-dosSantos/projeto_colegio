@@ -76,8 +76,8 @@ class TrimesterServiceTest {
 		assertEquals(1,response.size());
 		assertEquals(ID,response.get(0).getId());
 		assertEquals(NumberTrimester.FIRST_TRIMESTER,number);
-		assertEquals(BENNING, response.get(0).getBenning());
-		assertEquals(END,response.get(0).getEnd());
+		assertEquals(BENNING, response.get(0).getBenning_date());
+		assertEquals(END,response.get(0).getEnd_date());
 	}
 
 	@Test
@@ -91,8 +91,8 @@ when(repository.findById(anyInt())).thenReturn(optionalTrimester);
 		
 		assertEquals(ID,response.getId());
 		assertEquals(NumberTrimester.FIRST_TRIMESTER,number);
-		assertEquals(BENNING, response.getBenning());
-		assertEquals(END,response.getEnd());
+		assertEquals(BENNING, response.getBenning_date());
+		assertEquals(END,response.getEnd_date());
 	}
 
 }

@@ -74,8 +74,8 @@ class TrimesterResourceTest {
 		assertEquals(1,response.getBody().size());
 		assertEquals(ID,response.getBody().get(0).getId());
 		assertEquals(NumberTrimester.FIRST_TRIMESTER,number);
-		assertEquals(BENNING, response.getBody().get(0).getBenning());
-		assertEquals(END,response.getBody().get(0).getEnd());
+		assertEquals(BENNING, response.getBody().get(0).getBenning_date());
+		assertEquals(END,response.getBody().get(0).getEnd_date());
 		assertEquals(HttpStatus.OK,response.getStatusCode());
 		
 	
@@ -97,8 +97,8 @@ class TrimesterResourceTest {
 		assertNotNull(response.getBody());
 		
 		assertEquals(ID,response.getBody().getId());
-		assertEquals(BENNING,response.getBody().getBenning());
-		assertEquals(END,response.getBody().getEnd());
+		assertEquals(BENNING,response.getBody().getBenning_date());
+		assertEquals(END,response.getBody().getEnd_date());
 		
 		
 	}

@@ -2,6 +2,8 @@ package com.colegiox.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.colegiox.entities.enums.NumberTrimester;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -13,6 +15,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -47,6 +50,9 @@ public class SchoolTrimester implements Serializable{
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern= "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone="GMT")
 	@NonNull
 	private Instant end_date;
+	
+	@OneToMany(mappedBy="trimester")
+	private List<Exam>exams= new ArrayList<>();
 	
 	
 	

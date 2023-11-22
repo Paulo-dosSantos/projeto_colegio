@@ -44,9 +44,13 @@ public class SchoolClass implements Serializable{
 	@Enumerated(EnumType.STRING)
 	private Shifts shift;
 	
-		@OneToMany(mappedBy="schoolClass")
+	@OneToMany(mappedBy="schoolClass")
 	@JsonIgnore
 	private List<Student>students= new ArrayList<>();
+	
+	@OneToMany(mappedBy="schoolClass")
+	@JsonIgnore
+	private List<Exam>exams= new ArrayList<>();
 	
 	
 	
