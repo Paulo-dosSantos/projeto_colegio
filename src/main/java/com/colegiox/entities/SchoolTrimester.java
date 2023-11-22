@@ -24,7 +24,7 @@ import lombok.RequiredArgsConstructor;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Data
-public class Trimester implements Serializable{
+public class SchoolTrimester implements Serializable{
 	
 	/**
 	 * 
@@ -42,11 +42,11 @@ public class Trimester implements Serializable{
 	
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern= "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone="GMT")
 	@NonNull
-	private Instant benning;
+	private Instant benning_date;
 	
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern= "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone="GMT")
 	@NonNull
-	private Instant end;
+	private Instant end_date;
 	
 	
 	

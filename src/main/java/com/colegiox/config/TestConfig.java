@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Profile;
 
 import com.colegiox.entities.SchoolClass;
 import com.colegiox.entities.Student;
-import com.colegiox.entities.Trimester;
+import com.colegiox.entities.SchoolTrimester;
 import com.colegiox.entities.enums.NumberClass;
 import com.colegiox.entities.enums.NumberTrimester;
 import com.colegiox.entities.enums.Shifts;
@@ -47,7 +47,7 @@ public class TestConfig implements CommandLineRunner{
 		schoolclass1.getStudents().addAll(Arrays.asList(student1,student2));
 		schoolClassRepository.saveAll(Arrays.asList(schoolclass1,schoolclass2, schoolclass3));
 		studentRepository.saveAll(Arrays.asList(student1,student2));
-		Trimester trimester1= new Trimester(NumberTrimester.FIRST_TRIMESTER, Instant.parse("2023-02-02T00:00:00Z"),
+		SchoolTrimester trimester1= new SchoolTrimester(NumberTrimester.FIRST_TRIMESTER, Instant.parse("2023-02-02T00:00:00Z"),
 				Instant.parse("2002-04-02T00:00:00Z"));
 		
 		

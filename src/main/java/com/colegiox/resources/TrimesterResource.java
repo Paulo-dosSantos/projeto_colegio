@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.colegiox.entities.Trimester;
+import com.colegiox.entities.SchoolTrimester;
 import com.colegiox.services.TrimesterService;
 
 @RestController
@@ -19,11 +19,11 @@ public class TrimesterResource {
 	private TrimesterService service;
 	
 	@GetMapping
-	public ResponseEntity<List<Trimester>>findAll(){
+	public ResponseEntity<List<SchoolTrimester>>findAll(){
 		return ResponseEntity.ok().body(service.findAll());
 	}
 	@GetMapping(value="/{id}")
-	public ResponseEntity<Trimester>findById(@PathVariable Integer id){
+	public ResponseEntity<SchoolTrimester>findById(@PathVariable Integer id){
 		return ResponseEntity.ok().body(service.findById(id));
 	}
 

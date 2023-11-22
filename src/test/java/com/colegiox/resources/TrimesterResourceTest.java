@@ -21,7 +21,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import com.colegiox.entities.Trimester;
+import com.colegiox.entities.SchoolTrimester;
 import com.colegiox.entities.enums.NumberTrimester;
 import com.colegiox.services.TrimesterService;
 
@@ -35,7 +35,7 @@ class TrimesterResourceTest {
 	@Mock
 	private TrimesterService service;
 	
-	private Trimester trimester;
+	private SchoolTrimester trimester;
 	
 
 	
@@ -57,7 +57,7 @@ class TrimesterResourceTest {
 	}
 
 	private void startUser() {
-		trimester= new Trimester(number, BENNING, END);
+		trimester= new SchoolTrimester(number, BENNING, END);
 		trimester.setId(ID);
 		
 	}
@@ -66,11 +66,11 @@ class TrimesterResourceTest {
 	void testFindAll() {
 		when(service.findAll()).thenReturn(List.of(trimester));
 		
-		ResponseEntity<List<Trimester>>response= resource.findAll();
+		ResponseEntity<List<SchoolTrimester>>response= resource.findAll();
 		
 		assertNotNull(response);
 		assertEquals(ResponseEntity.class,response.getClass());
-		assertEquals(Trimester.class,response.getBody().get(0).getClass());
+		assertEquals(SchoolTrimester.class,response.getBody().get(0).getClass());
 		assertEquals(1,response.getBody().size());
 		assertEquals(ID,response.getBody().get(0).getId());
 		assertEquals(NumberTrimester.FIRST_TRIMESTER,number);
@@ -87,12 +87,12 @@ class TrimesterResourceTest {
 		
 		when(service.findById(anyInt())).thenReturn(trimester);
 		
-		ResponseEntity<Trimester>response=resource.findById(ID);
+		ResponseEntity<SchoolTrimester>response=resource.findById(ID);
 		
 		assertNotNull(response);
 		assertEquals(HttpStatus.OK,response.getStatusCode());
 		assertEquals(ResponseEntity.class,response.getClass());
-		assertEquals(Trimester.class,response.getBody().getClass());
+		assertEquals(SchoolTrimester.class,response.getBody().getClass());
 		assertNotNull(response);
 		assertNotNull(response.getBody());
 		

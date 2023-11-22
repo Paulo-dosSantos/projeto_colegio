@@ -20,7 +20,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.colegiox.entities.Trimester;
+import com.colegiox.entities.SchoolTrimester;
 import com.colegiox.entities.enums.NumberTrimester;
 import com.colegiox.repository.TrimesterRepository;
 
@@ -35,9 +35,9 @@ class TrimesterServiceTest {
 	@Mock
 	private TrimesterRepository repository;
 	
-	private Trimester trimester;
+	private SchoolTrimester trimester;
 	
-	private Optional<Trimester>optionalTrimester;
+	private Optional<SchoolTrimester>optionalTrimester;
 	
 	private static final Integer ID= 1;
 	private static final NumberTrimester number= NumberTrimester.FIRST_TRIMESTER;
@@ -57,7 +57,7 @@ class TrimesterServiceTest {
 
 	private void startUser() {
 		
-		trimester= new Trimester(number, BENNING, END);
+		trimester= new SchoolTrimester(number, BENNING, END);
 		trimester.setId(ID);
 		optionalTrimester= Optional.of(trimester);
 		
@@ -69,10 +69,10 @@ class TrimesterServiceTest {
 		
 		when(repository.findAll()).thenReturn(List.of(trimester));
 		
-		List<Trimester>response= service.findAll();
+		List<SchoolTrimester>response= service.findAll();
 		
 		assertNotNull(response);
-		assertEquals(Trimester.class,response.get(0).getClass());
+		assertEquals(SchoolTrimester.class,response.get(0).getClass());
 		assertEquals(1,response.size());
 		assertEquals(ID,response.get(0).getId());
 		assertEquals(NumberTrimester.FIRST_TRIMESTER,number);
@@ -84,10 +84,10 @@ class TrimesterServiceTest {
 	void testFindById() {
 when(repository.findById(anyInt())).thenReturn(optionalTrimester);
 		
-		Trimester response= service.findById(ID);
+		SchoolTrimester response= service.findById(ID);
 		
 		assertNotNull(response);
-		assertEquals(Trimester.class,response.getClass());
+		assertEquals(SchoolTrimester.class,response.getClass());
 		
 		assertEquals(ID,response.getId());
 		assertEquals(NumberTrimester.FIRST_TRIMESTER,number);
