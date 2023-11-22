@@ -18,7 +18,14 @@ public class ExamService {
 	
 	public List<Exam>findByTrimesterId(Integer id){
 		
-		return repository.findByTrimesterId(id);
+		List<Exam>exams=  repository.findByTrimesterId(id);
+		
+		if(exams.isEmpty()) {
+			throw new ObjectNotFoundException("não encontrado");
+		}
+		return exams;
+	
+	
 	}
 	public Exam findById(Integer id) {
 		return repository.findById(id).orElseThrow(()->new ObjectNotFoundException("Objeto não encontrado"));

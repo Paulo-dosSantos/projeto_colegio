@@ -2,8 +2,11 @@ package com.colegiox.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.colegiox.entities.enums.Subjects;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -11,6 +14,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -34,14 +38,16 @@ public class Exam implements Serializable{
 	@NonNull
 	@Enumerated(EnumType.STRING)
 	private Subjects subject;
+	
+	@NonNull
 	private Instant date;
 	
 	@ManyToOne
 	@NonNull
 	private SchoolTrimester trimester;
 	
-	@NonNull
-	@ManyToOne
-	private SchoolClass schoolClass;
+	@JsonIgnore
+	@ManyToMany(mappedBy="exams")
+	private List <SchoolClass> classes=new ArrayList<>();
 
 }

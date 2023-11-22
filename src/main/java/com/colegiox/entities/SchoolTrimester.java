@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.colegiox.entities.enums.NumberTrimester;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -51,6 +52,7 @@ public class SchoolTrimester implements Serializable{
 	@NonNull
 	private Instant end_date;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="trimester")
 	private List<Exam>exams= new ArrayList<>();
 	
