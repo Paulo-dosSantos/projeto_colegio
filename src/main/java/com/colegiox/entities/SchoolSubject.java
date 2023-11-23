@@ -13,6 +13,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -42,5 +43,9 @@ public class SchoolSubject implements Serializable {
 	@JsonIgnore
 	@OneToMany(mappedBy="schoolSubject")
 	private List<Teacher> teachers= new ArrayList<>();
+	
+	@JsonIgnore
+	@ManyToMany(mappedBy="subjects")
+	private List<SchoolClass>classes= new ArrayList<>();
 
 }

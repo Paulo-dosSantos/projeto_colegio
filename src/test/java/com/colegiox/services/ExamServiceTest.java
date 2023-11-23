@@ -2,7 +2,6 @@ package com.colegiox.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 
@@ -22,12 +21,9 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.colegiox.entities.Exam;
-import com.colegiox.entities.SchoolClass;
 import com.colegiox.entities.SchoolTrimester;
-import com.colegiox.entities.enums.NumberClass;
+import com.colegiox.entities.Teacher;
 import com.colegiox.entities.enums.NumberTrimester;
-import com.colegiox.entities.enums.Shifts;
-import com.colegiox.entities.enums.Subjects;
 import com.colegiox.repository.ExamRepository;
 
 @TestInstance(Lifecycle.PER_CLASS)
@@ -46,11 +42,14 @@ class ExamServiceTest {
 	
 	private static final Integer ID= 1;
 	
-	private static final Subjects SUBJECT= Subjects.BIOLOGY;
+	
 	
 	private static final Instant DATE= Instant.parse("2024-04-02T00:00:00Z");
 	
 	private static  SchoolTrimester trimester;
+	
+	@Mock
+	private static Teacher teacher;
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
 	}
@@ -67,11 +66,11 @@ class ExamServiceTest {
 		trimester= new SchoolTrimester(NumberTrimester.FIRST_TRIMESTER, Instant.parse("2024-02-02T00:00:00Z"),
 				Instant.parse("2024-04-02T00:00:00Z"));
 		
-		SchoolClass schoolClass= new SchoolClass(NumberClass.CLASS_1201, Shifts.MORNING_SHIFT);
 		
-		exam= new Exam(SUBJECT, DATE, trimester);
+		
+		exam= new Exam( DATE, trimester,teacher);
 		exam.setId(ID);
-		exam.getClasses().add(schoolClass);
+		
 		optionalExam= Optional.of(exam);
 		trimester.setId(ID);
 		
@@ -85,12 +84,12 @@ class ExamServiceTest {
 		
 		assertNotNull(response);
 		assertNotNull(response.get(0).getTrimester());
-		assertNotNull(response.get(0).getClasses());
+		assertNotNull(response.get(0).getTeacher());
 		assertEquals(Exam.class,response.get(0).getClass());
 		assertEquals(SchoolTrimester.class,response.get(0).getTrimester().getClass());
-		assertEquals(1,response.get(0).getClasses().size());
+		assertEquals(Teacher.class,response.get(0).getTeacher().getClass());
 		assertEquals(ID,response.get(0).getId());
-		assertEquals(Subjects.class,response.get(0).getSubject().getClass());
+		
 		
 	
 	
@@ -104,13 +103,11 @@ class ExamServiceTest {
 		
 		assertNotNull(response);
 		assertNotNull(response.getTrimester());
-		assertNotNull(response.getClasses());
 		assertEquals(Exam.class,response.getClass());
 		assertEquals(SchoolTrimester.class,response.getTrimester().getClass());
-		assertEquals(1,response.getClasses().size());
+		assertEquals(Teacher.class,response.getTeacher().getClass());
 		assertEquals(ID,response.getId());
-		assertEquals(Subjects.class,response.getSubject().getClass());
-		
+	
 		
 	}
 

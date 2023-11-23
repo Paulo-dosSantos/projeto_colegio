@@ -13,13 +13,16 @@ import com.colegiox.entities.SchoolClass;
 import com.colegiox.entities.SchoolSubject;
 import com.colegiox.entities.SchoolTrimester;
 import com.colegiox.entities.Student;
+import com.colegiox.entities.Teacher;
 import com.colegiox.entities.enums.NumberClass;
 import com.colegiox.entities.enums.NumberTrimester;
 import com.colegiox.entities.enums.Shifts;
 import com.colegiox.entities.enums.Subjects;
 import com.colegiox.repository.ExamRepository;
 import com.colegiox.repository.SchoolClassRepository;
+import com.colegiox.repository.SchoolSubjectRepository;
 import com.colegiox.repository.StudentRepository;
+import com.colegiox.repository.TeacherRepository;
 import com.colegiox.repository.TrimesterRepository;
 
 @Configuration
@@ -37,6 +40,14 @@ public class TestConfig implements CommandLineRunner{
 	private TrimesterRepository trimesterRepository;
 	@Autowired
 	private ExamRepository examRepository;
+	@Autowired
+	private TeacherRepository teacherRepository;
+	@Autowired
+	private SchoolSubjectRepository schoolSubjectRepository;
+	
+	
+	
+	
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -80,25 +91,52 @@ public class TestConfig implements CommandLineRunner{
 		
 		SchoolSubject history= new SchoolSubject(Subjects.HISTORY);
 		
-Exam exam1= new Exam(mathematics,Instant.parse("2024-04-02T00:00:00Z"),trimester1);
+		schoolSubjectRepository.saveAll(Arrays.asList(mathematics,
+				art,biology,chemistry,philosophy,sociology,portuguese,
+				history));
 		
-		Exam exam2= new Exam(art,Instant.parse("2024-04-04T00:00:00Z"),trimester1);
 		
-		Exam exam3= new Exam(biology,Instant.parse("2024-04-07T00:00:00Z"),trimester1);
+		Teacher teacher1= new Teacher("Stephen Strange","caraestranho@gmail.com",art);
+		Teacher teacher2= new Teacher("Steve Rogers","america@gmail.com",history);
+		Teacher teacher3= new Teacher("Bruce Banner","green@gmail.com",biology);
+		Teacher teacher4= new Teacher("Hank McCoy","ferinha@gmail.com",chemistry);
+		Teacher teacher5= new Teacher("Robert Downey Jr.","ferrodohome@gmail.com",mathematics);
+		Teacher teacher6= new Teacher("Charles Xavier","x@gmail.com",sociology);
+		Teacher teacher7= new Teacher("Clark Kent","esperanca@gmail.com",philosophy);
+		Teacher teacher8= new Teacher("Beatriz daCosta","fogo@gmail.com",portuguese);
 		
-		Exam exam4= new Exam(chemistry,Instant.parse("2024-04-09T00:00:00Z"),trimester1);
+		teacherRepository.saveAll(Arrays.asList(teacher1,teacher2,
+				teacher3,teacher4,teacher5,teacher6,teacher7,teacher8));
 		
-		Exam exam5= new Exam(philosophy,Instant.parse("2024-08-01T00:00:00Z"),trimester3);
 		
-		Exam exam6= new Exam(sociology,Instant.parse("2024-08-02T00:00:00Z"),trimester3);
 		
-		Exam exam7= new Exam(portuguese,Instant.parse("2024-08-12T00:00:00Z"),trimester3);
 		
-		Exam exam8= new Exam(history,Instant.parse("2024-08-13T00:00:00Z"),trimester3);
 		
-		Exam exam9= new Exam(history,Instant.parse("2024-08-14T00:00:00Z"),trimester3);
 		
-		Exam exam10= new Exam(mathematics,Instant.parse("2024-02-02T00:00:00Z"),trimester3);
+		
+		
+		
+		
+		
+Exam exam1= new Exam(Instant.parse("2024-04-02T00:00:00Z"),trimester1,teacher5);
+		
+		Exam exam2= new Exam(Instant.parse("2024-04-04T00:00:00Z"),trimester1,teacher1);
+		
+		Exam exam3= new Exam(Instant.parse("2024-04-07T00:00:00Z"),trimester1,teacher3);
+		
+		Exam exam4= new Exam(Instant.parse("2024-04-09T00:00:00Z"),trimester1,teacher4);
+		
+		Exam exam5= new Exam(Instant.parse("2024-08-01T00:00:00Z"),trimester3,teacher7);
+		
+		Exam exam6= new Exam(Instant.parse("2024-08-02T00:00:00Z"),trimester3,teacher6);
+		
+		Exam exam7= new Exam(Instant.parse("2024-08-12T00:00:00Z"),trimester3,teacher8);
+		
+		Exam exam8= new Exam(Instant.parse("2024-08-13T00:00:00Z"),trimester3,teacher8);
+		
+		Exam exam9= new Exam(Instant.parse("2024-08-14T00:00:00Z"),trimester3,teacher2);
+		
+		Exam exam10= new Exam(Instant.parse("2024-02-02T00:00:00Z"),trimester3,teacher5);
 		
 		
 		examRepository.saveAll(Arrays.asList(exam1,exam2,exam3,exam4,exam5,exam6,exam7,exam8,exam9,exam10));

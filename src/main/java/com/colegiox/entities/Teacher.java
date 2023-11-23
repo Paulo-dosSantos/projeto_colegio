@@ -1,11 +1,14 @@
 package com.colegiox.entities;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -32,6 +35,9 @@ public class Teacher implements Serializable{
 	@NonNull
 	@ManyToOne
 	private SchoolSubject schoolSubject;
+	
+	@OneToMany(mappedBy="teacher")
+	private List<Exam>exams= new ArrayList<>();
 	
 	
 

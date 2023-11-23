@@ -2,8 +2,6 @@ package com.colegiox.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -11,8 +9,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -32,8 +30,7 @@ public class Exam implements Serializable{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	
-	@NonNull
-	private SchoolSubject schoolSubject;
+	
 	
 	@NonNull
 	private Instant date;
@@ -42,10 +39,15 @@ public class Exam implements Serializable{
 	@NonNull
 	private SchoolTrimester trimester;
 	
+	
+	
+	@ManyToOne
 	@JsonIgnore
-	@ManyToMany(mappedBy="exams")
-	private List <SchoolClass> classes=new ArrayList<>();
+	@NonNull
+	private Teacher teacher;
 	
 	
-
+	public SchoolSubject getSchoolSubject() {
+		return teacher.getSchoolSubject();
+	}
 }
