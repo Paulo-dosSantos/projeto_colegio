@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Profile;
 
 import com.colegiox.entities.Exam;
 import com.colegiox.entities.SchoolClass;
+import com.colegiox.entities.SchoolSubject;
 import com.colegiox.entities.SchoolTrimester;
 import com.colegiox.entities.Student;
 import com.colegiox.entities.enums.NumberClass;
@@ -62,32 +63,45 @@ public class TestConfig implements CommandLineRunner{
 		
 		trimesterRepository.saveAll(Arrays.asList(trimester1,trimester3));
 		
-		Exam exam1= new Exam(Subjects.MATHEMATICS,Instant.parse("2024-04-02T00:00:00Z"),trimester1);
 		
-		Exam exam2= new Exam(Subjects.ART,Instant.parse("2024-04-04T00:00:00Z"),trimester1);
+		SchoolSubject mathematics= new SchoolSubject(Subjects.MATHEMATICS);
 		
-		Exam exam3= new Exam(Subjects.BIOLOGY,Instant.parse("2024-04-07T00:00:00Z"),trimester1);
+		SchoolSubject art= new SchoolSubject(Subjects.ART);
 		
-		Exam exam4= new Exam(Subjects.CHEMISTRY,Instant.parse("2024-04-09T00:00:00Z"),trimester1);
+		SchoolSubject biology= new SchoolSubject(Subjects.BIOLOGY);
 		
-		Exam exam5= new Exam(Subjects.MATHEMATICS,Instant.parse("2024-08-01T00:00:00Z"),trimester3);
+		SchoolSubject chemistry= new SchoolSubject(Subjects.CHEMISTRY);
 		
-		Exam exam6= new Exam(Subjects.PHILOSOPHY,Instant.parse("2024-08-02T00:00:00Z"),trimester3);
+		SchoolSubject philosophy= new SchoolSubject(Subjects.PHILOSOPHY);
 		
-		Exam exam7= new Exam(Subjects.SOCIOLOGY,Instant.parse("2024-08-12T00:00:00Z"),trimester3);
+		SchoolSubject sociology= new SchoolSubject(Subjects.SOCIOLOGY);
 		
-		Exam exam8= new Exam(Subjects.PORTUGUESE,Instant.parse("2024-08-13T00:00:00Z"),trimester3);
+		SchoolSubject portuguese= new SchoolSubject(Subjects.PORTUGUESE);
 		
-		Exam exam9= new Exam(Subjects.HISTORY,Instant.parse("2024-08-14T00:00:00Z"),trimester3);
+		SchoolSubject history= new SchoolSubject(Subjects.HISTORY);
 		
-		Exam exam10= new Exam(Subjects.MATHEMATICS,Instant.parse("2024-02-02T00:00:00Z"),trimester3);
+Exam exam1= new Exam(mathematics,Instant.parse("2024-04-02T00:00:00Z"),trimester1);
 		
+		Exam exam2= new Exam(art,Instant.parse("2024-04-04T00:00:00Z"),trimester1);
+		
+		Exam exam3= new Exam(biology,Instant.parse("2024-04-07T00:00:00Z"),trimester1);
+		
+		Exam exam4= new Exam(chemistry,Instant.parse("2024-04-09T00:00:00Z"),trimester1);
+		
+		Exam exam5= new Exam(philosophy,Instant.parse("2024-08-01T00:00:00Z"),trimester3);
+		
+		Exam exam6= new Exam(sociology,Instant.parse("2024-08-02T00:00:00Z"),trimester3);
+		
+		Exam exam7= new Exam(portuguese,Instant.parse("2024-08-12T00:00:00Z"),trimester3);
+		
+		Exam exam8= new Exam(history,Instant.parse("2024-08-13T00:00:00Z"),trimester3);
+		
+		Exam exam9= new Exam(history,Instant.parse("2024-08-14T00:00:00Z"),trimester3);
+		
+		Exam exam10= new Exam(mathematics,Instant.parse("2024-02-02T00:00:00Z"),trimester3);
 		
 		
 		examRepository.saveAll(Arrays.asList(exam1,exam2,exam3,exam4,exam5,exam6,exam7,exam8,exam9,exam10));
-		schoolclass1.getExams().addAll(Arrays.asList(exam1,exam2,exam3,exam4));
-		
-		schoolclass2.getExams().addAll(Arrays.asList(exam7,exam8,exam9,exam10));
 		
 		schoolClassRepository.saveAll(Arrays.asList(schoolclass1,schoolclass2, schoolclass3));
 		
