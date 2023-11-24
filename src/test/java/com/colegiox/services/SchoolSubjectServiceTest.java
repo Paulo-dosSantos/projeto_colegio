@@ -3,7 +3,11 @@ package com.colegiox.services;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
@@ -20,42 +24,38 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.colegiox.entities.Exam;
 import com.colegiox.entities.SchoolClass;
 import com.colegiox.entities.SchoolSubject;
 import com.colegiox.entities.Teacher;
+import com.colegiox.entities.enums.Subjects;
 import com.colegiox.exceptions.ObjectNotFoundException;
-import com.colegiox.repository.TeacherRepository;
+import com.colegiox.repository.SchoolSubjectRepository;
 
 @TestInstance(Lifecycle.PER_CLASS)
 @ExtendWith(MockitoExtension.class)
-class TeacherServiceTest {
+class SchoolSubjectServiceTest {
 	
-	private static final String EMAIL = "ironzinho@gmail.com";
-	private static final String EXCECAO = "Objeto não encontrado";
-
-	private static final String NAME = "Tony Stark";
-
 	@InjectMocks
-	private TeacherService service;
+	private SchoolSubjectService service;
 	
 	@Mock
-	private TeacherRepository repository;
+	private SchoolSubjectRepository repository;
 	
-	private Teacher teacher;
-	
-	private Optional<Teacher>optionalTeacher;
-	
-	@Mock
-	private SchoolClass schoolClass;
-	
-	@Mock
-	private Exam exam;
-	@Mock
 	private SchoolSubject schoolSubject;
 	
-	private static final Integer ID=1;
+	private Optional<SchoolSubject>optionalSchoolSubject;
 	
+	private static final Integer ID=1;
+	private static final String EXCECAO = "Objeto não encontrado";
+	
+	private static final Subjects NAME= Subjects.MATHEMATICS;
+	
+	@Mock
+	private static  SchoolClass schoolClass;
+	
+	@Mock
+	private static Teacher teacher;
+
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
 	}
@@ -67,40 +67,43 @@ class TeacherServiceTest {
 	}
 
 	private void startUser() {
-		teacher=new Teacher(NAME, EMAIL, schoolSubject);
-		teacher.getExams().add(exam);
-		teacher.setId(ID);
-		optionalTeacher=Optional.of(teacher);
+		schoolSubject= new SchoolSubject(NAME);
+		schoolSubject.setId(ID);
+		schoolSubject.getClasses().add(schoolClass);
+		schoolSubject.getTeachers().add(teacher);
+		optionalSchoolSubject=Optional.of(schoolSubject);
 	}
 
 	@Test
 	void testFindAll() {
-		when(repository.findAll()).thenReturn(List.of(teacher));
+		when(repository.findAll()).thenReturn(List.of(schoolSubject));
 		
-		List<Teacher>response=service.findAll();
+		List<SchoolSubject>response=service.findAll();
 		
 		assertNotNull(response);
-		assertNotNull(response.get(0).getSchoolSubject());
-		assertNotNull(response.get(0).getExams());
-		assertEquals(Teacher.class,response.get(0).getClass());
-		assertEquals(SchoolSubject.class,response.get(0).getSchoolSubject().getClass());
+		assertNotNull(response.get(0).getClasses());
+		assertNotNull(response.get(0).getTeachers());
+		assertEquals(1,response.get(0).getClasses().size());
+		assertEquals(1,response.get(0).getTeachers().size());
+		assertEquals(SchoolSubject.class,response.get(0).getClass());
 		assertEquals(NAME,response.get(0).getName());
-		assertEquals(EMAIL,response.get(0).getEmail());
+		assertEquals(ID,response.get(0).getId());
 	}
 
 	@Test
 	void testFindById() {
-		when(repository.findById(anyInt())).thenReturn(optionalTeacher);
+		when(repository.findById(anyInt())).thenReturn(optionalSchoolSubject);
 		
-		Teacher response=service.findById(ID);
+		SchoolSubject response= service.findById(ID);
 		
 		assertNotNull(response);
-		assertNotNull(response.getSchoolSubject());
-		assertNotNull(response.getExams());
-		assertEquals(Teacher.class,response.getClass());
-		assertEquals(SchoolSubject.class,response.getSchoolSubject().getClass());
+		assertNotNull(response.getClasses());
+		assertNotNull(response.getTeachers());
+		assertEquals(1,response.getClasses().size());
+		assertEquals(1,response.getTeachers().size());
+		assertEquals(SchoolSubject.class,response.getClass());
 		assertEquals(NAME,response.getName());
-		assertEquals(EMAIL,response.getEmail());
+		assertEquals(ID,response.getId());
 	}
 	@Test
 	void testFindByIdReturnObjectNotFoundException() {

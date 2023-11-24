@@ -22,6 +22,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.colegiox.entities.SchoolTrimester;
 import com.colegiox.entities.enums.NumberTrimester;
+import com.colegiox.exceptions.ObjectNotFoundException;
 import com.colegiox.repository.TrimesterRepository;
 
 
@@ -43,7 +44,8 @@ class TrimesterServiceTest {
 	private static final NumberTrimester number= NumberTrimester.FIRST_TRIMESTER;
 	private static final Instant BENNING=Instant.parse("2023-02-02T00:00:00Z");
 	private static final Instant END= Instant.parse("2002-04-02T00:00:00Z");
-	
+	private static final String EXCECAO = "Objeto não encontrado";
+
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -93,6 +95,19 @@ when(repository.findById(anyInt())).thenReturn(optionalTrimester);
 		assertEquals(NumberTrimester.FIRST_TRIMESTER,number);
 		assertEquals(BENNING, response.getBenning_date());
 		assertEquals(END,response.getEnd_date());
+	}
+	@Test
+	void testFindByIdReturnObjectNotFoundException() {
+		when(repository.findById(anyInt())).thenThrow(new ObjectNotFoundException(EXCECAO));
+		
+		try {
+			service.findById(ID);
+		}
+		catch(Exception ex) {
+			assertEquals(ObjectNotFoundException.class, ex.getClass());
+			assertEquals(EXCECAO,ex.getMessage());
+		}
+
 	}
 
 }

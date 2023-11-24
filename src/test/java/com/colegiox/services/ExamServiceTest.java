@@ -24,6 +24,7 @@ import com.colegiox.entities.Exam;
 import com.colegiox.entities.SchoolTrimester;
 import com.colegiox.entities.Teacher;
 import com.colegiox.entities.enums.NumberTrimester;
+import com.colegiox.exceptions.ObjectNotFoundException;
 import com.colegiox.repository.ExamRepository;
 
 @TestInstance(Lifecycle.PER_CLASS)
@@ -41,6 +42,7 @@ class ExamServiceTest {
 	private Optional<Exam>optionalExam;
 	
 	private static final Integer ID= 1;
+	private static final String EXCECAO = "Objeto não encontrado";
 	
 	
 	
@@ -109,6 +111,19 @@ class ExamServiceTest {
 		assertEquals(ID,response.getId());
 	
 		
+	}
+	@Test
+	void testFindByIdReturnObjectNotFoundException() {
+		when(repository.findById(anyInt())).thenThrow(new ObjectNotFoundException(EXCECAO));
+		
+		try {
+			service.findById(ID);
+		}
+		catch(Exception ex) {
+			assertEquals(ObjectNotFoundException.class, ex.getClass());
+			assertEquals(EXCECAO,ex.getMessage());
+		}
+
 	}
 
 }
