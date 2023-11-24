@@ -23,6 +23,7 @@ import org.springframework.http.ResponseEntity;
 import com.colegiox.entities.Exam;
 import com.colegiox.entities.SchoolClass;
 import com.colegiox.entities.SchoolTrimester;
+import com.colegiox.entities.Teacher;
 import com.colegiox.entities.enums.NumberClass;
 import com.colegiox.entities.enums.NumberTrimester;
 import com.colegiox.entities.enums.Shifts;
@@ -48,6 +49,9 @@ class ExamResourceTest {
 	private static final Instant DATE= Instant.parse("2024-04-02T00:00:00Z");
 	
 	private static  SchoolTrimester trimester;
+	
+	@Mock
+	private static Teacher teacher;
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -63,11 +67,10 @@ class ExamResourceTest {
 		trimester= new SchoolTrimester(NumberTrimester.FIRST_TRIMESTER, Instant.parse("2024-02-02T00:00:00Z"),
 				Instant.parse("2024-04-02T00:00:00Z"));
 		
-		SchoolClass schoolClass= new SchoolClass(NumberClass.CLASS_1201, Shifts.MORNING_SHIFT);
 		
-		exam= new Exam(SUBJECT, DATE, trimester);
+		exam= new Exam( DATE, trimester,teacher);
 		exam.setId(ID);
-		exam.getClasses().add(schoolClass);
+		
 		
 		trimester.setId(ID);
 		
@@ -80,16 +83,12 @@ class ExamResourceTest {
 		ResponseEntity<List<Exam>>response= resource.findByTrimesterId(ID);
 		
 		assertNotNull(response);
-		assertNotNull(response.getBody().get(0).getClasses());
 		assertNotNull(response.getBody().get(0).getTrimester());
 		assertEquals(ResponseEntity.class,response.getClass());
 		assertEquals(Exam.class,response.getBody().get(0).getClass());
 		assertEquals(SchoolTrimester.class,response.getBody().get(0).getTrimester().getClass());
-		assertEquals(SchoolClass.class,response.getBody().get(0).getClasses().get(0).getClass());
-		assertEquals(1,response.getBody().get(0).getClasses().size());
 		assertEquals(ID,response.getBody().get(0).getId());
-		assertEquals(Subjects.class,response.getBody().get(0).getSubject().getClass());
-		
+		assertEquals(Teacher.class,response.getBody().get(0).getTeacher().getClass());
 	}
 
 	@Test
@@ -99,16 +98,12 @@ when(service.findById(anyInt())).thenReturn(exam);
 		ResponseEntity<Exam> response= resource.findById(ID);
 		
 		assertNotNull(response);
-		assertNotNull(response.getBody().getClasses());
 		assertNotNull(response.getBody().getTrimester());
 		assertEquals(ResponseEntity.class,response.getClass());
 		assertEquals(Exam.class,response.getBody().getClass());
 		assertEquals(SchoolTrimester.class,response.getBody().getTrimester().getClass());
-		assertEquals(SchoolClass.class,response.getBody().getClasses().get(0).getClass());
-		assertEquals(1,response.getBody().getClasses().size());
 		assertEquals(ID,response.getBody().getId());
-		assertEquals(Subjects.class,response.getBody().getSubject().getClass());
-		
+		assertEquals(Teacher.class,response.getBody().getTeacher().getClass());
 
 	}
 
