@@ -2,12 +2,17 @@ package com.colegiox.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -47,4 +52,8 @@ public class Student implements Serializable{
 	@ManyToOne
 	@NonNull
 	private SchoolClass schoolClass;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy="student")
+	private List<ExamTaken>examsTaken= new ArrayList<>();
 }
